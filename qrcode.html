@@ -1,0 +1,80 @@
+ 
+<script src="qrcode.min.js"></script>
+
+ <div class="app">
+
+	<div class="qr" style="user-select: none;"></div>
+	
+    <br/>
+	<div class="content">
+
+ 
+
+		Background color : <input id="qrcodecolorLight" type="color" value="#ffffff"> 
+		Contrast : <input id="qrcodecolorDark" type="color">
+        Size :   
+		
+			<select id="qrcodesize">
+			<option value="64">small</option>
+			<option value="128" selected >normal</option>
+			<option value="256">big</option>
+			<option value="512">huge</option>
+			</select><br/>
+
+		Text : 
+
+		<textarea rows="5" id="qrcodetext" style="max-width:100%;width:100%;">Generator QR Code</textarea>
+		<br>
+		<button type="submit">Generator QR Code</button>
+
+		<a href="" download="qrcode.png" id="download"><button>Download QR Code</button></a>
+
+	</div>
+</div>
+ 
+ <script language="javascript">
+ 
+const qr = document.querySelector(".qr")
+const button = document.querySelector("button")
+
+qrcodegenerator();
+
+button.onclick = () => {
+    qrcodegenerator();
+}
+
+function qrcodegenerator()
+{
+    let qrcodetext = document.getElementById("qrcodetext").value;
+	let qrcodecolorLight = document.getElementById("qrcodecolorLight").value;
+	let qrcodecolorDark  = document.getElementById("qrcodecolorDark").value;
+	let qrcodesize = document.getElementById("qrcodesize").value; 
+	
+	if ( qrcodetext.lenght == 0 ) {
+		return;
+	}
+	
+	qr.innerHTML = "";
+	
+	new QRCode(qr, {
+	text: qrcodetext,
+	colorDark:  qrcodecolorDark ,
+	colorLight: qrcodecolorLight ,
+	width: qrcodesize ,
+	height: qrcodesize 
+	})
+	
+    setTimeout(() => {
+        downloadQrCode()
+    }, 1000)
+}
+
+function downloadQrCode() {
+    let download = document.querySelector("#download")
+    let img = document.querySelector("img")
+    download.href = img.src
+}
+
+</script>
+ 
+ 
